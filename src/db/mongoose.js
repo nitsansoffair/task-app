@@ -7,61 +7,74 @@ mongoose.connect('mongodb://127.0.0.1:27017/tasks-app-api', {
     useUnifiedTopology: true
 });
 
-const User = new mongoose.model('User', {
-    name: {
+// const User = new mongoose.model('User', {
+//     name: {
+//         type: String,
+//         required: true,
+//         trim: true
+//     },
+//     email: {
+//         type: String,
+//         required: true,
+//         trim: true,
+//         lowercase: true,
+//         validate(value){
+//             if(!validator.isEmail(value)){
+//                 throw new Error('Email is invalid');
+//             }
+//         }
+//     },
+//     password: {
+//         type: String,
+//         required: true,
+//         validate(value){
+//             if(value.toLowerCase().indexOf('password') !== -1){
+//                 throw new Error('Password should not contain `password`');
+//             }
+//         },
+//         trim: true,
+//         minlength: 7
+//     },
+//     age: {
+//         type: Number,
+//         default: 0,
+//         validate(value){
+//             if(value < 0){
+//                 throw new Error('Age must be a positive number')
+//             }
+//         }
+//     }
+// });
+//
+// const me = new User({
+//     name: '   Andrew  ',
+//     email: 'EMAIL@MEAD.IO   '
+// });
+//
+// me.save()
+//     .then(() => {
+//         console.log(me);
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
+
+const Task = new mongoose.model('Task', {
+    description: {
         type: String,
         required: true,
         trim: true
     },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error('Email is invalid');
-            }
-        }
-    },
-    age: {
-        type: Number,
-        default: 0,
-        validate(value){
-            if(value < 0){
-                throw new Error('Age must be a positive number')
-            }
-        }
+    completed: {
+        type: Boolean,
+        default: false
     }
 });
 
-const me = new User({
-    name: '   Andrew  ',
-    email: 'EMAIL@MEAD.IO   '
+const task = new Task({
+    description: '   description   '
 });
 
-me.save()
-    .then(() => {
-        console.log(me);
-    })
-    .catch(err => {
-        console.log(err);
-    });
-
-// const Task = new mongoose.model('Task', {
-//     description: {
-//         type: String
-//     },
-//     completed: {
-//         type: Boolean
-//     }
-// });
-//
-// const task = new Task({
-//     description: 'description',
-//     completed: false
-// });
-//
-// task.save()
-//     .then(res => console.log(res))
-//     .catch(err => console.log(err));
+task.save()
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
