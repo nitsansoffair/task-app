@@ -13,28 +13,8 @@ MongoClient.connect(connectionURL, {
 
     const db = client.db(databaseName);
 
-    // db.collection('users').findOne({ _id: new ObjectID('5e5b0593e1cd14305456c730') }, (error, user) => {
-    //     if(error){
-    //         return console.log('Unable to fetch');
-    //     }
-    //
-    //     console.log(user);
-    // });
-    //
-    // db.collection('users').find({ age: 27 }).toArray((error, users) => {
-    //     console.log(users);
-    // });
-    //
-    // db.collection('users').find({ age: 27 }).count((error, count) => {
-    //     console.log(count);
-    // });
-
-    // db.collection('users').updateOne({
-    //     _id: new ObjectID("5e5b040fa7c46441accf3f49")
-    // }, {
-    //     $inc: {
-    //         age: 1
-    //     }
+    // db.collection('users').deleteMany({
+    //     age: 27
     // })
     //     .then(res => {
     //         console.log(res);
@@ -43,17 +23,9 @@ MongoClient.connect(connectionURL, {
     //         console.log(err);
     //     });
 
-    db.collection('tasks').updateMany({
-        completed: false
-    }, {
-        $set: {
-            completed: true
-        }
+    db.collection('tasks').deleteOne({
+        _id: new ObjectID('5e5b0624e4194127b8543f4a')
     })
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
 });
