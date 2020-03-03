@@ -14,11 +14,11 @@ const port = process.env.PORT || 3000;
 //     }
 // });
 
-app.use((req, res, next) => {
-    res
-        .status(503)
-        .send('Middleware');
-});
+// app.use((req, res, next) => {
+//     res
+//         .status(503)
+//         .send('Middleware');
+// });
 
 app.use(express.json());
 app.use(userRouter);
