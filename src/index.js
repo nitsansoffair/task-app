@@ -13,21 +13,3 @@ app.use(taskRouter);
 app.listen(port, () => {
     console.log('Server is up on port ' + port);
 });
-
-const multer = require('multer');
-const upload = multer({
-    dest: 'upload',
-    limits: {
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb){
-        if(!file.originalname.match(/\.(doc|docx)$/)){
-            return cb(new Error('File must be a word document'));
-        }
-
-        cb(undefined, true);
-    }
-});
-app.post('/upload', upload.single('upload'), (req, res) => {
-    res.send();
-});
