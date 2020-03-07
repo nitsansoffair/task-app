@@ -9,8 +9,8 @@ test('Should sign up a new user', async() => {
     const response = await request(app)
         .post('/users')
         .send({
-            name: 'test_2',
-            email: 'test_2@test.com',
+            name: 'test_3',
+            email: 'test_3@test.com',
             password: '1111111'
         })
         .expect(201);
@@ -20,8 +20,8 @@ test('Should sign up a new user', async() => {
 
     expect(response.body).toMatchObject({
         user: {
-            name: 'test_2',
-            email: 'test_2@test.com'
+            name: 'test_3',
+            email: 'test_3@test.com'
         },
         token: user.tokens[0].token
     });
