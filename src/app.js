@@ -14,7 +14,8 @@ app.use(userRouter);
 app.use(taskRouter);
 app.use('/graphql', graphqlHttp(({
     schema: graphqlSchema,
-    rootValue: graphqlResolver
+    rootValue: graphqlResolver,
+    graphiql: true
 })));
 
 module.exports = app;
