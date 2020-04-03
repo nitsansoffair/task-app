@@ -12,6 +12,13 @@ const app = express();
 app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter);
+app.use((req, res, next) => {
+    if(req.method === 'OPTIONS'){
+        return res.sendStatus(200);
+    }
+
+    next();
+});
 app.use('/graphql', graphqlHttp(({
     schema: graphqlSchema,
     rootValue: graphqlResolver,
