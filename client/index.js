@@ -109,7 +109,7 @@ const createTask = ({ description, completed }, token) => {
 
 login({ email: '', password: '' })
     .then(({ data: { login: { token } } }) => {
-        createTask({ description: 'susu sans', completed: false }, token)
+        createTask({ description: 'Description', completed: false }, token)
             .then(res => console.log(res))
             .catch(e => console.log(e));
     })
