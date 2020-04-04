@@ -69,3 +69,8 @@ const login = ({ email, password }) => {
         })
         .catch(err => console.log(err));
 };
+
+login({
+    email: 'test@test.net',
+    password: '12345678'
+});

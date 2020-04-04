@@ -3,6 +3,7 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const Task = require('../models/task');
 
 module.exports = {
     createUser: async function({ userInput }, req){
@@ -73,6 +74,40 @@ module.exports = {
         return {
             token,
             userId: user._id.toString()
+        };
+    },
+    createTask: async function ({ taskInputData }, req) {
+        const errors = [];
+
+        if (validator.isEmpty(taskInputData.description)){
+            errors.push({
+                message: 'Description is invalid.'
+            });
+        }
+
+        if(errors.length > 0){
+            const error = new Error('Invalid input.');
+            error.data = errors;
+            error.code = 422;
+
+            throw error;
+        }
+
+        const user = await User.findOne({ email: 'test@test.net' });
+
+        const task = new Task({
+            description: taskInputData.description,
+            completed: taskInputData.complete,
+            owner: user._id.toString()
+        });
+
+        const createdTask = await task.save();
+
+        return {
+            ...createdTask._doc,
+            _id: createdTask._id.toString(),
+            createdAt: createdTask.createdAt.toISOString(),
+            updatedAt: createdTask.updatedAt.toISOString()
         };
     }
 };
