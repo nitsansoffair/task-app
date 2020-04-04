@@ -41,6 +41,9 @@ module.exports = {
             name: userInput.name,
             password: userInput.password
         });
+
+        await user.generateAuthToken();
+
         const createdUser = await user.save();
 
         return {
@@ -65,18 +68,22 @@ module.exports = {
             throw error;
         }
 
-        const token = jwt.sign({
-            userId: user._id.toString(),
-            email: user.email,
-
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = await user.generateAuthToken();
 
         return {
             token,
             userId: user._id.toString()
         };
     },
-    createTask: async function ({ taskInputData }, req) {
+    createTask: async function (data, req) {
+        const { taskInputData } = data;
+
+        if(!req.isAuth){
+            const error = new Error('Please authenticate.');
+            error.code = 401;
+            throw error;
+        }
+
         const errors = [];
 
         if (validator.isEmpty(taskInputData.description)){
@@ -93,12 +100,12 @@ module.exports = {
             throw error;
         }
 
-        const user = await User.findOne({ email: 'test@test.net' });
+        const user = await User.findById(req.userId);
 
         const task = new Task({
             description: taskInputData.description,
             completed: taskInputData.complete,
-            owner: user._id.toString()
+            owner: user
         });
 
         const createdTask = await task.save();
