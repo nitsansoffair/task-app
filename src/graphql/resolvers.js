@@ -35,11 +35,10 @@ module.exports = {
             throw error;
         }
 
-        const hashedPass = await bcrypt.hash(userInput.password, 12);
         const user = new User({
             email: userInput.email,
             name: userInput.name,
-            password: hashedPass
+            password: userInput.password
         });
         const createdUser = await user.save();
 
