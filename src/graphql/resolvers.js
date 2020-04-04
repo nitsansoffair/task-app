@@ -116,5 +116,25 @@ module.exports = {
             createdAt: createdTask.createdAt.toISOString(),
             updatedAt: createdTask.updatedAt.toISOString()
         };
+    },
+    tasks: async function(args, req){
+        if(!req.isAuth){
+            const error = new Error('Please authenticate.');
+            error.code = 401;
+            throw error;
+        }
+
+        const user = await User.findById(req.userId);
+        await user.populate({
+            path: 'tasks',
+            options: {
+                sort: "desc"
+            }
+        }).execPopulate();
+
+        return {
+            tasks: user.tasks,
+            totalTasks: user.tasks.length
+        };
     }
 };
