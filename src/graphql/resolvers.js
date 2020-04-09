@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
-const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 const Task = require('../models/task');
@@ -117,12 +116,14 @@ module.exports = {
             updatedAt: createdTask.updatedAt.toISOString()
         };
     },
-    tasks: async function(args, req){
+    tasks: async function({ page = 1 }, req){
         if(!req.isAuth){
             const error = new Error('Please authenticate.');
             error.code = 401;
             throw error;
         }
+
+        const perPage = 2;
 
         const user = await User.findById(req.userId);
         await user.populate({
@@ -133,8 +134,8 @@ module.exports = {
         }).execPopulate();
 
         return {
-            tasks: user.tasks,
-            totalTasks: user.tasks.length
+            tasks: user.tasks.slice((page - 1) * perPage, page * perPage),
+            totalTasks: perPage
         };
     }
 };
