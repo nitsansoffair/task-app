@@ -1,3 +1,5 @@
 /config/dev.env
 /config/test.env
 /commands.txt
+src/ssl/server.cert
+src/ssl/server.key
