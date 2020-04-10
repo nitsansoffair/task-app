@@ -1,5 +1,7 @@
 const express = require('express');
 const graphqlHttp = require('express-graphql');
+const helmet = require('helmet');
+const compression = require('compression');
 
 require('./db/mongoose');
 const userRouter = require('./routers/user');
@@ -9,6 +11,9 @@ const graphqlResolver = require('./graphql/resolvers');
 const auth = require('./middleware/auth');
 
 const app = express();
+
+app.use(helmet());
+app.use(compression());
 
 app.use(express.json());
 app.use(userRouter);
