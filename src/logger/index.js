@@ -8,19 +8,19 @@ const myFormat = combine(
     prettyPrint()
 );
 
-const logger = winston.createLogger({
+const index = winston.createLogger({
     format: myFormat,
     levels: winston.config.syslog.levels,
     transports: [
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'combined.log' }),
+        new winston.transports.File({ filename: './src/logger/logs/combined.log' }),
+        new winston.transports.File({ filename: './src/logger/logs/error.log', level: 'error' }),
     ]
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
+    index.add(new winston.transports.Console({
         format: myFormat
     }));
 }
 
-module.exports = logger;
+module.exports = index;

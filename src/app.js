@@ -15,7 +15,7 @@ const auth = require('./middleware/auth');
 
 const app = express();
 const accessLogStream = fs.createWriteStream(
-    path.join(__dirname, 'access.log'),
+    path.join(__dirname, './logger/logs/access.log'),
     { flags: 'a' }
     );
 
