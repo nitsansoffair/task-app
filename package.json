@@ -30,7 +30,8 @@
     "node-fetch": "^2.6.0",
     "save": "^2.4.0",
     "sharp": "^0.24.1",
-    "validator": "^12.2.0"
+    "validator": "^12.2.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
